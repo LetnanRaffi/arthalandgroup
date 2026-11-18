@@ -1,0 +1,17 @@
+# Header keamanan untuk Cloudflare Pages.
+# File ini otomatis dibaca Cloudflare dari root hasil build (`out/_headers`).
+# Tidak bisa ditaruh di `next.config.ts` karena static export tidak punya server.
+# Format: blok path diikuti baris "Nama-Header: nilai". Komentar memakai "#".
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

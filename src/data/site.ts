@@ -37,12 +37,20 @@ export type IconName =
 const COMPANY = {
   name: "PT Artha Land Group",
   address: "Kota Serang, Banten",
+  /** Kota & provinsi — dipakai untuk metadata SEO lokal. */
+  city: "Serang",
+  region: "Banten",
+  country: "ID",
   /** Nomor WhatsApp untuk link wa.me (format internasional, tanpa "+"). */
   waNumber: process.env.NEXT_PUBLIC_WA_NUMBER?.replace(/[^0-9]/g, "") || "6285220590574",
   /** Nomor yang ditampilkan di website. */
   phoneDisplay: "0852-2059-0574",
   email: "Ptarthalandgroup@gmail.com",
-  domain: "arthalandgroup.com",
+  /**
+   * Domain produksi. Bisa dioverride lewat env saat domain final dibeli,
+   * tanpa mengubah kode: NEXT_PUBLIC_SITE_DOMAIN=arthalandgroup.com
+   */
+  domain: process.env.NEXT_PUBLIC_SITE_DOMAIN?.replace(/^https?:\/\//, "").replace(/\/$/, "") || "arthalandgroup.com",
 } as const;
 
 export const company = COMPANY;
@@ -59,17 +67,43 @@ export const waMessage = "Halo Artha Land Group, saya ingin konsultasi";
 /** Link WhatsApp dengan pesan awal. */
 export const waUrl = `https://wa.me/${COMPANY.waNumber}?text=${encodeURIComponent(waMessage)}`;
 
+/**
+ * Link WhatsApp dengan pesan khusus, mis. dari kartu unit usaha.
+ * Membuat setiap kartu bisa diklik dan langsung membuka chat yang relevan,
+ * tanpa perlu halaman detail per unit.
+ */
+export function waLink(message: string): string {
+  return `https://wa.me/${COMPANY.waNumber}?text=${encodeURIComponent(message)}`;
+}
+
 /* ------------------------------------------------------------------ */
 /* SEO / metadata                                                      */
 /* ------------------------------------------------------------------ */
 
-/** Aktifkan lewat env saat go-live; default noindex selama preview. */
-export const allowIndex = process.env.NEXT_PUBLIC_ALLOW_INDEX === "true";
+/**
+ * Default: boleh diindeks (tujuan website adalah muncul di Google).
+ * Matikan saat masih preview dengan NEXT_PUBLIC_ALLOW_INDEX=false.
+ */
+export const allowIndex = process.env.NEXT_PUBLIC_ALLOW_INDEX !== "false";
 
 export const seo = {
   title: "Artha Land Group | Solusi Terintegrasi untuk Kebutuhan Bisnis Anda",
+  /** Judul untuk hasil pencarian Google — menyertakan lokasi (SEO lokal). */
+  titleTemplate: "PT Artha Land Group — Pengadaan, Konstruksi & Percetakan di Serang, Banten",
   description:
-    "PT Artha Land Group menyediakan pengadaan, percetakan, alat kesehatan, alat berat, hiburan, konstruksi, hingga kuliner.",
+    "PT Artha Land Group menyediakan pengadaan barang & jasa, percetakan, alat kesehatan, alat berat, rental PlayStation, konstruksi, hingga kuliner & café di Kota Serang, Banten.",
+  keywords: [
+    "Artha Land Group",
+    "PT Artha Land Group",
+    "pengadaan barang dan jasa Serang",
+    "percetakan Serang",
+    "alat kesehatan Banten",
+    "sewa alat berat Banten",
+    "rental PlayStation Serang",
+    "kontraktor konstruksi Serang",
+    "kuliner dan cafe Serang",
+    "perusahaan Serang Banten",
+  ],
   ogAlt: "Gedung kantor PT Artha Land Group",
   themeColor: "#0a1a33",
 } as const;
@@ -128,8 +162,6 @@ export const navLinks = [
   { label: "Unit Usaha", href: "#unit" },
   { label: "Produk", href: "#produk" },
   { label: "Portofolio", href: "#portofolio" },
-  // Belum ada halaman berita -> sementara ke #kontak (PRD §7).
-  { label: "Berita", href: "#kontak" },
   { label: "Kontak", href: "#kontak" },
 ] as const;
 
@@ -262,9 +294,9 @@ export const footer = {
     heading: "Informasi Perusahaan",
     links: [
       { label: "Tentang Kami", href: "#tentang" },
-      { label: "Visi & Misi", href: "#" },
-      { label: "Struktur Perusahaan", href: "#" },
-      { label: "Karir", href: "#" },
+      { label: "Unit Usaha", href: "#unit" },
+      { label: "Produk & Layanan", href: "#produk" },
+      { label: "Kontak", href: "#kontak" },
     ],
   },
   unitUsaha: {
@@ -286,17 +318,19 @@ export const footer = {
     heading: "Ikuti Kami",
     /**
      * Isi URL asli saat tersedia. Kosongkan ("") untuk menyembunyikan ikon.
+     * Saat ini dikosongkan karena akun resmi belum diberikan klien.
      */
     links: [
-      { label: "Instagram", icon: "instagram" as IconName, href: "#" },
-      { label: "TikTok", icon: "tiktok" as IconName, href: "#" },
-      { label: "YouTube", icon: "youtube" as IconName, href: "#" },
-      { label: "LinkedIn", icon: "linkedin" as IconName, href: "#" },
+      { label: "Instagram", icon: "instagram" as IconName, href: "" },
+      { label: "TikTok", icon: "tiktok" as IconName, href: "" },
+      { label: "YouTube", icon: "youtube" as IconName, href: "" },
+      { label: "LinkedIn", icon: "linkedin" as IconName, href: "" },
     ] as { label: string; icon: IconName; href: string }[],
   },
   copyright: "© 2026 PT Artha Land Group. All Rights Reserved.",
-  legal: [
-    { label: "Kebijakan Privasi", href: "#" },
-    { label: "Syarat & Ketentuan", href: "#" },
-  ],
+  /**
+   * Dikosongkan sampai dokumen aslinya ada. Link "#" yang bisa diklik
+   * lebih buruk daripada tidak ditampilkan sama sekali.
+   */
+  legal: [] as { label: string; href: string }[],
 } as const;

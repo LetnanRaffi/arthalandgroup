@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { JsonLd } from "@/components/JsonLd";
 import { allowIndex, favicon, logo, ogImage, seo, siteUrl } from "@/data/site";
 
 const inter = Inter({
@@ -12,9 +13,17 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: seo.title,
+  title: {
+    default: seo.titleTemplate,
+    template: "%s | Artha Land Group",
+  },
   description: seo.description,
+  keywords: [...seo.keywords],
   applicationName: "Artha Land Group",
+  authors: [{ name: "PT Artha Land Group" }],
+  creator: "PT Artha Land Group",
+  publisher: "PT Artha Land Group",
+  category: "business",
   alternates: {
     canonical: "/",
   },
@@ -23,7 +32,7 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: siteUrl,
     siteName: "Artha Land Group",
-    title: seo.title,
+    title: seo.titleTemplate,
     description: seo.description,
     images: [
       {
@@ -36,13 +45,22 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: seo.title,
+    title: seo.titleTemplate,
     description: seo.description,
     images: [{ url: ogImage.src, alt: seo.ogAlt }],
   },
-  // Masa preview: noindex, nofollow. Aktifkan lewat NEXT_PUBLIC_ALLOW_INDEX=true saat go-live.
   robots: allowIndex
-    ? { index: true, follow: true, googleBot: { index: true, follow: true } }
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      }
     : { index: false, follow: false, googleBot: { index: false, follow: false } },
   icons: {
     icon: [
@@ -63,7 +81,13 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        <a className="skip-link" href="#main">
+          Lewati ke konten utama
+        </a>
+        {children}
+        <JsonLd />
+      </body>
     </html>
   );
 }

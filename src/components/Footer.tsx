@@ -84,13 +84,20 @@ export function Footer() {
 
         <div className="foot-bottom">
           <span>{footer.copyright}</span>
-          <span className="foot-legal">
-            <a href={footer.legal[0].href}>{footer.legal[0].label}</a>
-            <span className="sep" aria-hidden="true">
-              |
+          {footer.legal.length > 0 && (
+            <span className="foot-legal">
+              {footer.legal.map((item, i) => (
+                <span key={item.label}>
+                  {i > 0 && (
+                    <span className="sep" aria-hidden="true">
+                      |
+                    </span>
+                  )}
+                  <a href={item.href}>{item.label}</a>
+                </span>
+              ))}
             </span>
-            <a href={footer.legal[1].href}>{footer.legal[1].label}</a>
-          </span>
+          )}
         </div>
       </div>
     </footer>

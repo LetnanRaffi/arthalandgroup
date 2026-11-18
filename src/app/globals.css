@@ -315,6 +315,100 @@ svg {
 }
 
 /* ==========================================================================
+   AKSESIBILITAS
+   ========================================================================== */
+
+/* Fokus keyboard yang terlihat jelas. Sebelumnya tidak ada sama sekali,
+   sehingga pengguna keyboard tidak tahu sedang berada di elemen mana. */
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Di atas latar navy, cincin emas kurang kontras — pakai putih. */
+.hero :focus-visible,
+.site-header :focus-visible,
+.stats :focus-visible,
+.cta :focus-visible,
+.site-footer :focus-visible,
+.wa-float:focus-visible {
+  outline-color: #fff;
+}
+.wa-float:focus-visible {
+  outline-offset: 4px;
+}
+
+/* Link lewati navigasi: tersembunyi sampai difokus dengan Tab. */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 12px 20px;
+  background: #fff;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: top 0.15s ease-in-out;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ==========================================================================
+   HALAMAN 404
+   ========================================================================== */
+.notfound {
+  min-height: 72vh;
+  display: grid;
+  align-items: center;
+  padding: 120px 0 80px;
+  background: var(--soft);
+}
+.notfound-code {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.notfound h1 {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.15;
+}
+.notfound-text {
+  margin-top: 14px;
+  max-width: 460px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.notfound-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+.notfound-actions .btn {
+  background: var(--navy);
+  color: #fff;
+}
+.notfound-actions .btn:hover {
+  background: var(--navy-3);
+}
+.btn-ghost-dark {
+  background: transparent;
+  color: var(--navy);
+  border-color: rgba(10, 26, 51, 0.25);
+}
+.btn-ghost-dark:hover {
+  background: rgba(10, 26, 51, 0.06);
+}
+
+/* ==========================================================================
    TRUST BAR (di dalam hero, aliran normal, menempel ke dasar hero)
    ========================================================================== */
 .trust {
@@ -825,6 +919,9 @@ footer li a:hover {
   * {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+  .skip-link {
+    transition: none;
   }
 }
 

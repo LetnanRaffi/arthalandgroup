@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Icon } from "@/components/icons/Icon";
 import { Reveal } from "@/components/Reveal";
-import { photos, products } from "@/data/site";
+import { photos, products, waLink } from "@/data/site";
 
 export function Products() {
   return (
@@ -9,8 +9,13 @@ export function Products() {
       <div className="container">
         <Reveal className="sec-head">
           <h2>Produk &amp; Layanan Unggulan</h2>
-          <a className="link-more" href="#produk">
-            Lihat Semua Produk <Icon name="arrow" size={14} className="stroke-current" />
+          <a
+            className="link-more"
+            href={waLink("Halo Artha Land Group, saya ingin menanyakan produk & layanan")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Tanya Produk <Icon name="arrow" size={14} className="stroke-current" />
           </a>
         </Reveal>
 
@@ -18,7 +23,15 @@ export function Products() {
           {products.map((product, i) => {
             const photo = photos[product.photo];
             return (
-              <Reveal as="a" href="#" className="product" delayMs={i * 70} key={product.photo}>
+              <Reveal
+                as="a"
+                href={waLink(`Halo Artha Land Group, saya ingin menanyakan ${product.title}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="product"
+                delayMs={i * 70}
+                key={product.photo}
+              >
                 <div className="ph">
                   <Image
                     src={photo.src}

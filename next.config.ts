@@ -1,12 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Halaman ini statis dan tidak memakai data yang berubah per-request.
-  cacheComponents: true,
-  partialPrefetching: true,
+  /**
+   * Hosting: Cloudflare Pages (statis, tanpa Node server).
+   * `output: "export"` menghasilkan folder `out/` berisi HTML/CSS/JS siap upload.
+   * Konsekuensi: tidak ada Image Optimization API dan tidak ada route dinamis,
+   * jadi `images.unoptimized` aktif dan semua gambar sudah dioptimasi lebih dulu
+   * (lihat `scripts/optimize-images.mjs`).
+   */
+  output: "export",
+  trailingSlash: true,
   images: {
-    // Semua gambar lokal, tidak ada remotePatterns (tidak ada hotlink).
-    formats: ["image/avif", "image/webp"],
+    // Wajib untuk static export: gambar disajikan apa adanya dari /public.
+    unoptimized: true,
   },
   turbopack: {
     rules: {
