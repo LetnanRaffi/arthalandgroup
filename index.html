@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artha Land Group | Solusi Terintegrasi untuk Kebutuhan Bisnis Anda</title>
+<meta name="description" content="PT Artha Land Group menyediakan pengadaan, percetakan, alat kesehatan, alat berat, hiburan, konstruksi, hingga kuliner.">
+<meta name="theme-color" content="#0a1a33">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/*
+  CATATAN UNTUK AI AGENT / DEVELOPER
+  - Logo: ganti elemen .logo-mark (SVG placeholder) dengan file logo asli bila sudah ada
+          (contoh: [img src="logo.png" alt="Artha Land Group"]).
+          Logo muncul 2x: di header dan di footer.
+  - Foto: semua foto diambil dari folder assets/ (file lokal). Siapkan file berikut:
+            assets/hero.jpg         -> foto gedung kantor (hero)
+            assets/pengadaan.jpg    -> gudang/logistik
+            assets/percetakan.jpg   -> mesin cetak digital
+            assets/alkes.jpg        -> peralatan medis
+            assets/alatberat.jpg    -> ekskavator / alat berat
+            assets/playstation.jpg  -> konsol PlayStation
+            assets/konstruksi.jpg   -> proyek konstruksi
+            assets/kuliner.jpg      -> burger & minuman
+          Selama file belum ada, tampil gradient navy (fallback, tidak error).
+  - Nomor WA: cari "6281234567890" lalu ganti (format internasional tanpa + dan spasi).
+  - Email, alamat, dan link sosmed ada di footer.
+  - Gambar pakai loading="lazy" kecuali hero (agar tampil instan).
+*/
+:root{
+  --navy:#0a1a33;
+  --navy-2:#10264a;
+  --navy-3:#16356a;
+  --gold:#c8963e;
+  --text:#14213d;
+  --muted:#5b6678;
+  --bg:#ffffff;
+  --soft:#f3f6fb;
+  --radius:10px;
+
+  /* GANTI file di folder assets/ (nama file tetap). Bila file belum ada -> gradient navy sebagai fallback. */
+  --img-hero: url('assets/hero.jpg');
+  --img-pengadaan: url('assets/pengadaan.jpg');
+  --img-percetakan: url('assets/percetakan.jpg');
+  --img-alkes: url('assets/alkes.jpg');
+  --img-alatberat: url('assets/alatberat.jpg');
+  --img-playstation: url('assets/playstation.jpg');
+  --img-konstruksi: url('assets/konstruksi.jpg');
+  --img-kuliner: url('assets/kuliner.jpg');
+
+  /* Gradient fallback navy (dipakai bila foto belum tersedia) */
+  --fallback-navy: linear-gradient(140deg,#16356a 0%,#10264a 45%,#0a1a33 100%);
+  /* Foto pilihan per komponen. Kosongkan (url('')) bila ingin menonaktifkan. */
+  --img-cta: var(--img-hero);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* NAVBAR */
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,26,51,.55);backdrop-filter:blur(10px);transition:background .3s}
+header.scrolled{background:rgba(10,26,51,.96)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff}
+.logo-mark{width:38px;height:38px}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-text b{font-size:18px;letter-spacing:.06em;font-weight:700}
+.logo-text small{font-size:9px;letter-spacing:.5em;margin-top:4px;opacity:.85;padding-left:2px}
+nav ul{display:flex;gap:26px;list-style:none;color:#fff;font-size:14px;font-weight:500}
+nav a{padding:6px 0;border-bottom:2px solid transparent;opacity:.9}
+nav a:hover,nav a.active{border-color:#fff;opacity:1}
+.nav-right{display:flex;align-items:center;gap:14px}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.7);color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(255,255,255,.06)}
+.btn-outline:hover{background:rgba(255,255,255,.18)}
+.burger{display:none;background:none;border:0;color:#fff;cursor:pointer;padding:6px}
+.burger svg{transition:transform .3s}
+.burger[aria-expanded="true"] svg{transform:rotate(90deg)}
+/* backdrop menu mobile supaya bisa ditutup dengan klik di luar */
+.nav-backdrop{display:none}
+
+/* HERO */
+/* Foto hero dipindah ke ::before, sehingga bila file belum ada, gradient navy fallback tetap muncul */
+/* .trust berada di DALAM .hero dan memakai ALIRAN NORMAL (bukan position:absolute),
+   sehingga trust bar selalu memakan ruang sendiri dan tidak pernah terpotong tepi hero.
+   .hero memakai justify-content:space-between agar konten hero di atas dan trust bar
+   menempel ke dasar hero. .hero TIDAK memakai overflow:hidden (hanya overflow-x:clip
+   untuk mencegah scroll horizontal tanpa memotong sumbu vertikal). */
+.hero{position:relative;min-height:620px;display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;color:#fff;background:var(--fallback-navy);padding-top:72px;padding-bottom:0;overflow-x:clip;overflow-y:visible}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;background-image:var(--img-hero);background-position:center;background-size:cover;background-repeat:no-repeat}
+/* overlay gelap dari kiri: teks putih tetap terbaca, foto gedung terlihat di sisi kanan */
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(8,20,42,.95) 0%,rgba(8,20,42,.85) 38%,rgba(8,20,42,.45) 68%,rgba(8,20,42,.2) 100%)}
+/* konten hero (di atas trust bar) */
+.hero>.container{position:relative;z-index:2;padding-top:60px;padding-bottom:44px}
+.eyebrow{font-size:12px;letter-spacing:.2em;font-weight:600;margin-bottom:18px;opacity:.95;color:var(--gold)}
+.hero h1{font-size:clamp(30px,5.2vw,56px);line-height:1.1;font-weight:800;max-width:560px;overflow-wrap:break-word}
+.hero p{max-width:480px;margin-top:20px;font-size:15px;opacity:.92}
+.hero-cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;transition:.2s}
+.btn-white{background:#fff;color:var(--navy)}
+.btn-white:hover{background:#e9eef8}
+.btn-ghost{border-color:rgba(255,255,255,.7);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.15)}
+
+/* TRUST BAR */
+/* Aliran normal (bukan absolute) + margin-top:auto agar menempel ke dasar hero
+   tanpa menimpa konten di atasnya. z-index:3 agar di atas overlay hero (.hero::after z-index:1). */
+.trust{position:relative;z-index:3;margin-top:auto;width:100%;padding-top:22px;padding-bottom:22px;background:rgba(10,26,51,.92);border-top:1px solid rgba(255,255,255,.12)}
+/* grid memakai .container yang sama dengan section lain (max-width + padding 20px),
+   sehingga kolom pertama sejajar dengan tepi kiri teks hero */
+.trust-grid{display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:10px}
+.trust-item{display:flex;align-items:center;gap:12px;color:#fff;padding-left:12px;border-right:1px solid rgba(255,255,255,.15);min-width:0}
+.trust-item:first-child{padding-left:0}
+.trust-item:last-child{border-right:0}
+.trust-item svg{width:30px;height:30px;flex:none;stroke:#fff;fill:none;stroke-width:1.5}
+.trust-item>div{min-width:0}
+.trust-item b{display:block;font-size:14px;font-weight:700;line-height:1.3}
+.trust-item span{display:block;font-size:12px;opacity:.8;line-height:1.3}
+
+/* SECTIONS */
+/* pakai longhand (bukan shorthand) agar tidak menimpa padding hero di bawah */
+section{padding-top:56px;padding-bottom:56px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;gap:16px}
+.sec-head h2{font-size:28px;font-weight:800;position:relative;padding-bottom:12px}
+.sec-head h2::after{content:"";position:absolute;left:0;bottom:0;width:34px;height:3px;background:var(--gold);border-radius:2px}
+.link-more{font-size:12.5px;font-weight:500;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.link-more:hover{color:var(--navy-3)}
+
+/* UNIT BISNIS */
+.units{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+/* foto kartu = background-image dari CSS variable --img-* (fallback gradient navy bila file belum ada) */
+.unit{position:relative;aspect-ratio:1/1.25;border-radius:var(--radius);overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;background-color:var(--navy-2);background-image:var(--fallback-navy);background-size:cover;background-position:center;transition:transform .25s,box-shadow .25s}
+.unit:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(10,26,51,.25)}
+.unit::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,20,42,.05) 30%,rgba(8,20,42,.92) 100%)}
+.unit>*{position:relative;z-index:2}
+.unit svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.6;margin-bottom:8px}
+.unit b{font-size:13px;line-height:1.25;font-weight:600}
+
+/* PRODUK */
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.product{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(10,26,51,.1);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+.product:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(10,26,51,.18)}
+.product .ph{height:150px;position:relative;overflow:hidden;background-color:var(--navy-2);background-image:var(--fallback-navy);background-size:cover;background-position:center}
+/* saat foto tersedia (background-image diisi inline), ukuran foto ikut cover */
+.product .ph[style]{background-size:cover;background-position:center}
+/* bila foto sudah dipakai (ada inline background-image), label disembunyikan */
+.product .ph[style] .ph-label{display:none}
+/* label hanya terlihat bila foto belum ada (tertutup foto saat foto tersedia) */
+.product .ph-label{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.6);font-weight:600;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.product .body{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;background:var(--soft);flex:1}
+.product h3{font-size:14.5px;font-weight:700}
+.product p{font-size:11.5px;color:var(--muted);margin-top:2px}
+.arrow{flex:none;width:30px;height:30px;border-radius:50%;background:var(--navy);display:grid;place-items:center}
+.arrow svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+
+/* STATS */
+.stats{background:linear-gradient(90deg,var(--navy),var(--navy-3));color:#fff;padding:34px 0}
+.stats-grid{display:grid;grid-template-columns:1.2fr repeat(4,1fr);gap:20px;align-items:center}
+.stats h2{font-size:26px;font-weight:800;line-height:1.15}
+.stat{display:flex;align-items:center;gap:14px;padding-left:20px;border-left:1px solid rgba(255,255,255,.2)}
+.stat svg{width:40px;height:40px;stroke:#fff;fill:none;stroke-width:1.4;flex:none}
+.stat b{display:block;font-size:26px;font-weight:800;line-height:1;color:var(--gold)}
+.stat span{font-size:12.5px;opacity:.85}
+.stat.last b{font-size:22px}
+
+/* CTA BANNER */
+.cta-wrap{padding:36px 0}
+.cta{display:grid;grid-template-columns:240px 1fr auto;align-items:center;gap:24px;background:linear-gradient(90deg,#dbe6f5,#eef3fb);border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(10,26,51,.1)}
+.cta .img{align-self:stretch;min-height:96px;overflow:hidden;background-color:var(--navy-2);background-image:var(--fallback-navy);background-size:cover;background-position:center}
+.cta h3{font-size:20px;font-weight:800}
+.cta p{font-size:13px;color:var(--muted);margin-top:6px;max-width:520px}
+.cta .btn{margin-right:28px;background:var(--navy);color:#fff;padding:14px 26px}
+.cta .btn:hover{background:var(--navy-3)}
+
+/* FOOTER */
+footer{background:var(--navy);color:#fff;padding:44px 0 0}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1.4fr 1.3fr 1fr;gap:28px;padding-bottom:34px}
+footer h4{font-size:13.5px;font-weight:700;margin-bottom:14px}
+footer ul{list-style:none;display:grid;gap:9px;font-size:12px;opacity:.85}
+footer li a:hover{text-decoration:underline}
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;min-width:0}
+.cols-2 li{min-width:0;overflow-wrap:anywhere}
+.contact li{display:flex;gap:10px;align-items:flex-start}
+.contact svg{width:14px;height:14px;flex:none;margin-top:3px;fill:#fff}
+.social{display:flex;gap:16px}
+.social a{opacity:.9}.social a:hover{opacity:1}
+.social svg{width:20px;height:20px;fill:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.15);padding:18px 0;display:flex;justify-content:space-between;gap:16px;font-size:11.5px;opacity:.85;flex-wrap:wrap}
+.foot-bottom a:hover{text-decoration:underline}
+/* jarak antar link legal: 12px kiri-kanan dengan pemisah "|" di tengah */
+.foot-legal{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.foot-legal .sep{opacity:.6}
+
+/* FLOATING WA */
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:60;width:54px;height:54px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.3);transition:transform .2s}
+.wa-float:hover{transform:scale(1.06)}
+.wa-float svg{width:28px;height:28px;fill:#fff}
+
+/* ANIMASI SCROLL (fade-up, tanpa library) */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.fade-up.in{opacity:1;transform:none}
+/* pengguna yang mengurangi animasi / tanpa JS: langsung tampil */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .fade-up{opacity:1;transform:none;transition:none}
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  nav ul{gap:16px;font-size:13px}
+  .units{grid-template-columns:repeat(4,1fr)}
+  .products{grid-template-columns:repeat(2,1fr)}
+  /* TRUST BAR tablet: 3 kolom */
+  .trust-grid{grid-template-columns:repeat(3,1fr);align-items:center;row-gap:18px;column-gap:10px}
+  .trust-item{padding-left:0}
+  .trust-item:nth-child(3n),.trust-item:last-child{border-right:0}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stats h2{grid-column:1/-1}
+  .stat{border-left:0;padding-left:0}
+  .foot-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:860px){
+  nav{position:fixed;top:72px;left:0;right:0;background:var(--navy);max-height:0;overflow:hidden;transition:max-height .3s;box-shadow:0 12px 24px rgba(0,0,0,.2)}
+  nav.open{max-height:420px;overflow-y:auto}
+  nav ul{flex-direction:column;padding:12px 20px 20px;gap:4px}
+  nav a{display:block;padding:10px 0}
+  .burger{display:block}
+  .nav-right .btn-outline{display:none}
+  .nav-backdrop{display:block;position:fixed;inset:72px 0 0;background:rgba(5,12,26,.45);border:0;z-index:40;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-backdrop.show{opacity:1;pointer-events:auto}
+  /* HERO mobile: trust bar sekarang ikut aliran normal (tidak absolute),
+     jadi tidak perlu padding-bottom tambahan. Cukup beri jarak aman di bawah konten hero. */
+  .hero{min-height:620px;padding-bottom:0}
+  .hero>.container{padding-top:36px;padding-bottom:36px}
+  /* overlay sedikit lebih gelap di mobile karena area teks lebih panjang */
+  .hero::after{background:linear-gradient(180deg,rgba(8,20,42,.95) 0%,rgba(8,20,42,.9) 55%,rgba(8,20,42,.8) 100%)}
+  .trust{background:rgba(10,26,51,.95)}
+  .trust-grid{grid-template-columns:repeat(2,1fr);row-gap:16px}
+  .cta{grid-template-columns:1fr}
+  .cta .img{min-height:110px}
+  .cta>div{padding:0 22px}
+  .cta .btn{margin:0 22px 24px;justify-self:start}
+}
+@media (max-width:560px){
+  section{padding-top:40px;padding-bottom:40px}
+  .units{grid-template-columns:repeat(2,1fr)}
+  .products{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .foot-grid>div:first-child{grid-column:1/-1}
+  .foot-bottom{flex-direction:column}
+  .foot-bottom .foot-legal{margin-left:0}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:20px}
+  .sec-head h2{font-size:23px}
+  /* TRUST BAR mobile kecil: 2 kolom tetap, item terakhir span 2 kolom */
+  .trust-grid{grid-template-columns:repeat(2,1fr);gap:14px 10px}
+  .trust-item{padding-left:0;border-right:0}
+  .trust-item:last-child{grid-column:1/-1}
+  .trust-item b{font-size:13.5px}
+  .trust-item span{font-size:11.5px}
+  /* hero boleh lebih tinggi dari 620px agar trust bar 5 item tampil penuh */
+  .hero{min-height:auto}
+  .cta .btn{margin-left:22px}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-logo" viewBox="0 0 48 48"><path d="M24 4 6 44h8l10-24 4 10-7 0-3 7h18z" fill="#fff"/><path d="M8 40c10-2 22-9 34-8-12 0-22 4-34 8z" fill="#c8963e"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7a11.600 11.600 0 0 1-4.800-4.200c-.4-.5-1.200-1.600-1.200-3s.7-2 1-2.300.6-.3.800-.3h.600c.2 0 .4 0 .6.500l.8 2c.1.2.1.400 0 .600l-.4.600-.4.4c-.1.200-.3.300-.1.600a7 7 0 0 0 3.400 2.800c.3.100.5.100.7-.1l.9-1c.2-.3.400-.2.700-.1l1.900.9c.3.100.5.200.5.400.1.100.1.700-.1 1.300z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 3 3 7.500v9L12 21l9-4.500v-9zM3 7.500 12 12m0 0 9-4.500M12 12v9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z" stroke-linejoin="round"/></symbol>
+    <symbol id="i-med" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M12 10.500v6M9 13.500h6"/></symbol>
+    <symbol id="i-hat" viewBox="0 0 24 24"><path d="M4 18h16M5 18a7 7 0 0 1 14 0M12 8V5M9 11l-1-3M15 11l1-3" stroke-linecap="round"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v3a3 3 0 0 1-5 2l-1.500-2h-5L8 17a3 3 0 0 1-5-2v-3a4 4 0 0 1 4-4zM8 11v3M6.500 12.500h3M15.500 11.500h.01M17.500 13.500h.01" stroke-linecap="round"/></symbol>
+    <symbol id="i-build" viewBox="0 0 24 24"><path d="M4 21V5l9-2v18M13 8h7v13M8 8h2M8 12h2M8 16h2M16 12h1M16 16h1M3 21h18" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 10h1.500a2.500 2.500 0 0 1 0 5H17M7 3c0 1.500 1 1.500 1 3M11 3c0 1.500 1 1.500 1 3" stroke-linecap="round"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M3 11l5-4 4 2 4-2 5 4-8 8zM8 7l-3 5M16 7l3 5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.500"/><path d="M8.500 14 7 21l5-3 5 3-1.500-7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.500 8 8 9 4.500-1 8-4 8-9V6z"/><path d="m8.500 12 2.500 2.500 5-5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.500"/><path d="M2 20c0-3.500 2.500-6 6-6s6 2.500 6 6M15 14c3 0 6 1.500 6 5"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1 13H4zM8.500 8V6a3.500 3.500 0 0 1 7 0v2"/><path d="m9 14 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.600 10.800a15 15 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.2 11 11 0 0 0 3.600.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.200.2 2.400.6 3.600a1 1 0 0 1-.2 1z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM3 6l9 7 9-7" fill="none" stroke="#fff" stroke-width="1.800"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm5 3.500A4.500 4.500 0 1 1 7.500 12 4.500 4.500 0 0 1 12 7.500zm0 2A2.500 2.500 0 1 0 14.500 12 2.500 2.500 0 0 0 12 9.500zM17.500 5.500a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/></symbol>
+    <symbol id="i-tt" viewBox="0 0 24 24"><path d="M16 3a5 5 0 0 0 4 4v3a8 8 0 0 1-4-1.200V15a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3V3z"/></symbol>
+    <symbol id="i-yt" viewBox="0 0 24 24"><path d="M22 8a3 3 0 0 0-2-2c-1.700-.5-8-.5-8-.5s-6.300 0-8 .5a3 3 0 0 0-2 2c-.5 1.700-.5 4-.5 4s0 2.300.5 4a3 3 0 0 0 2 2c1.700.5 8 .5 8 .5s6.300 0 8-.5a3 3 0 0 0 2-2c.5-1.700.5-4 .5-4s0-2.300-.5-4zM10 15V9l5 3z"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path d="M4 9h4v12H4zM6 3a2.200 2.200 0 1 1 0 4.400A2.200 2.200 0 0 1 6 3zM10 9h3.800v1.700c.6-1 1.900-2 3.900-2 4 0 4.300 2.600 4.300 5.800V21h-4v-5.800c0-1.400 0-3.200-2-3.200s-2.100 1.500-2.100 3.100V21h-4z"/></symbol>
+  </defs>
+</svg>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="container nav">
+    <a href="#beranda" class="logo" aria-label="Artha Land Group">
+      <!-- GANTI dengan file logo asli (img src="logo.png" alt="Artha Land Group") jika sudah ada -->
+      <svg class="logo-mark"><use href="#i-logo"/></svg>
+      <span class="logo-text"><b>ARTHA LAND</b><small>GROUP</small></span>
+    </a>
+    <nav id="nav" aria-label="Navigasi utama">
+      <ul>
+        <li><a href="#beranda" class="active">Beranda</a></li>
+        <li><a href="#tentang">Tentang Kami</a></li>
+        <li><a href="#unit">Unit Usaha</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#portofolio">Portofolio</a></li>
+        <li><a href="#berita">Berita</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <a class="btn-outline" href="https://wa.me/6281234567890" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="#fff"><use href="#i-wa"/></svg> Hubungi Kami
+      </a>
+      <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- backdrop untuk menutup menu mobile dengan klik di luar -->
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+  <div class="container">
+    <div class="eyebrow">PT ARTHA LAND GROUP</div>
+    <h1>Solusi Terintegrasi untuk Kebutuhan Bisnis Anda</h1>
+    <p>Menyediakan berbagai layanan dan produk unggulan di bidang pengadaan, percetakan, alat kesehatan, alat berat, hiburan, konstruksi, hingga kuliner.</p>
+    <div class="hero-cta">
+      <a href="#produk" class="btn btn-white">Lihat Produk <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><use href="#i-arrow"/></svg></a>
+      <a href="#tentang" class="btn btn-ghost">Tentang Kami</a>
+    </div>
+  </div>
+  <div class="trust">
+    <div class="container trust-grid">
+      <div class="trust-item"><svg><use href="#i-hand"/></svg><div><b>Terpercaya</b><span>Legal &amp; Berizin Resmi</span></div></div>
+      <div class="trust-item"><svg><use href="#i-award"/></svg><div><b>Profesional</b><span>Tim Berpengalaman</span></div></div>
+      <div class="trust-item"><svg><use href="#i-box"/></svg><div><b>Produk Lengkap</b><span>Berbagai Kebutuhan Usaha</span></div></div>
+      <div class="trust-item"><svg><use href="#i-bolt"/></svg><div><b>Layanan Cepat</b><span>Responsif &amp; Tepat Waktu</span></div></div>
+      <div class="trust-item"><svg><use href="#i-shield"/></svg><div><b>Kualitas Terjamin</b><span>Standar dan Bergaransi</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- UNIT BISNIS -->
+<section id="unit">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <h2>Unit Bisnis Kami</h2>
+      <a class="link-more" href="#unit">Lihat Semua Unit Usaha <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="units" data-stagger>
+      <!-- Foto unit usaha diatur lewat CSS variable --img-* di :root (file di folder assets/) -->
+      <a href="#" class="unit fade-up" style="background-image:var(--img-pengadaan)">
+        <svg><use href="#i-box"/></svg><b>Pengadaan<br>Barang &amp; Jasa</b>
+      </a>
+      <a href="#" class="unit fade-up" style="background-image:var(--img-percetakan)">
+        <svg><use href="#i-print"/></svg><b>Percetakan<br>&amp; Digital Printing</b>
+      </a>
+      <a href="#" class="unit fade-up" style="background-image:var(--img-alkes)">
+        <svg><use href="#i-med"/></svg><b>Alat<br>Kesehatan</b>
+      </a>
+      <a href="#" class="unit fade-up" style="background-image:var(--img-alatberat)">
+        <svg><use href="#i-hat"/></svg><b>Alat Berat<br>&amp; Operasional</b>
+      </a>
+      <a href="#" class="unit fade-up" style="background-image:var(--img-playstation)">
+        <svg><use href="#i-game"/></svg><b>Hiburan<br>&amp; Rental PlayStation</b>
+      </a>
+      <a href="#" class="unit fade-up" style="background-image:var(--img-konstruksi)">
+        <svg><use href="#i-build"/></svg><b>Konstruksi<br>&amp; Kontraktor</b>
+      </a>
+      <a href="#" class="unit fade-up" style="background-image:var(--img-kuliner)">
+        <svg><use href="#i-cup"/></svg><b>Kuliner<br>&amp; Café</b>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUK -->
+<section id="produk" style="padding-top:8px">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <h2>Produk &amp; Layanan Unggulan</h2>
+      <a class="link-more" href="#produk">Lihat Semua Produk <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="products" data-stagger>
+      <a href="#" class="product fade-up">
+        <div class="ph" style="background-image:var(--img-percetakan)"><span class="ph-label">Foto Percetakan</span></div>
+        <div class="body"><div><h3>Produk Percetakan</h3><p>Kartu nama, brosur, banner, merchandise, dll</p></div><span class="arrow"><svg><use href="#i-arrow"/></svg></span></div>
+      </a>
+      <a href="#" class="product fade-up">
+        <div class="ph" style="background-image:var(--img-alkes)"><span class="ph-label">Foto Alat Kesehatan</span></div>
+        <div class="body"><div><h3>Alat Kesehatan</h3><p>Perlengkapan medis berkualitas &amp; bersertifikat</p></div><span class="arrow"><svg><use href="#i-arrow"/></svg></span></div>
+      </a>
+      <a href="#" class="product fade-up">
+        <div class="ph" style="background-image:var(--img-playstation)"><span class="ph-label">Foto PlayStation</span></div>
+        <div class="body"><div><h3>Rental &amp; Penjualan PlayStation</h3><p>PS3, PS4, PS5, game &amp; aksesoris</p></div><span class="arrow"><svg><use href="#i-arrow"/></svg></span></div>
+      </a>
+      <a href="#" class="product fade-up">
+        <div class="ph" style="background-image:var(--img-kuliner)"><span class="ph-label">Foto Kuliner</span></div>
+        <div class="body"><div><h3>Kuliner &amp; Café</h3><p>Menu makanan, minuman &amp; ruang santai</p></div><span class="arrow"><svg><use href="#i-arrow"/></svg></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MENGAPA MEMILIH KAMI -->
+<section class="stats" id="tentang" style="padding:34px 0">
+  <div class="container stats-grid" data-stagger>
+    <h2 class="fade-up">Mengapa<br>Memilih Kami?</h2>
+    <div class="stat fade-up"><svg><use href="#i-users"/></svg><div><b>100+</b><span>Klien &amp; Mitra</span></div></div>
+    <div class="stat fade-up"><svg><use href="#i-bag"/></svg><div><b>500+</b><span>Proyek &amp; Pengadaan</span></div></div>
+    <div class="stat fade-up"><svg><use href="#i-award"/></svg><div><b>7+</b><span>Lini Usaha Aktif</span></div></div>
+    <div class="stat last fade-up"><svg><use href="#i-shield"/></svg><div><b>Bersertifikat</b><span>Legal &amp; Berizin Resmi</span></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-wrap" id="portofolio">
+  <div class="container">
+    <div class="cta fade-up">
+      <div class="img" style="background-image:var(--img-cta)"></div>
+      <div>
+        <h3>Butuh Solusi untuk<br>Kebutuhan Usaha Anda?</h3>
+        <p>Konsultasikan kebutuhan pengadaan, percetakan, alat kesehatan, hingga layanan lainnya bersama tim kami.</p>
+      </div>
+      <a class="btn" href="https://wa.me/6281234567890?text=Halo%20Artha%20Land%20Group%2C%20saya%20ingin%20konsultasi" target="_blank" rel="noopener">
+        <svg width="20" height="20" fill="#fff"><use href="#i-wa"/></svg> Konsultasi Sekarang
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontak">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a href="#beranda" class="logo">
+          <!-- GANTI logo footer ini juga bila logo asli sudah ada -->
+          <svg class="logo-mark" style="width:46px;height:46px"><use href="#i-logo"/></svg>
+          <span class="logo-text"><b style="font-size:20px">ARTHA LAND</b><small>GROUP</small></span>
+        </a>
+      </div>
+      <div>
+        <h4>Informasi Perusahaan</h4>
+        <ul>
+          <li><a href="#tentang">Tentang Kami</a></li>
+          <li><a href="#">Visi &amp; Misi</a></li>
+          <li><a href="#">Struktur Perusahaan</a></li>
+          <li><a href="#">Karir</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Unit Usaha</h4>
+        <ul class="cols-2">
+          <li><a href="#unit">Pengadaan Barang &amp; Jasa</a></li>
+          <li><a href="#unit">Rental PlayStation</a></li>
+          <li><a href="#unit">Percetakan</a></li>
+          <li><a href="#unit">Konstruksi</a></li>
+          <li><a href="#unit">Alat Kesehatan</a></li>
+          <li><a href="#unit">Kuliner &amp; Café</a></li>
+          <li><a href="#unit">Alat Berat</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontak Kami</h4>
+        <ul class="contact">
+          <li><svg><use href="#i-pin"/></svg>Kabupaten Serang, Banten</li>
+          <li><svg><use href="#i-phone"/></svg><a href="tel:+6281234567890">+62 812-3456-7890</a></li>
+          <li><svg><use href="#i-mail"/></svg><a href="mailto:info@arthalandgroup.co.id">info@arthalandgroup.co.id</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ikuti Kami</h4>
+        <!-- GANTI href dengan link sosmed asli -->
+        <div class="social">
+          <a href="#" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg><use href="#i-tt"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg><use href="#i-yt"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg><use href="#i-in"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 PT Artha Land Group. All Rights Reserved.</span>
+      <span class="foot-legal"><a href="#">Kebijakan Privasi</a><span class="sep" aria-hidden="true">|</span><a href="#">Syarat &amp; Ketentuan</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+  <svg><use href="#i-wa"/></svg>
+</a>
+
+<script>
+(function () {
+  'use strict';
+
+  /* 1. Navbar berubah warna saat halaman di-scroll */
+  var header = document.getElementById('header');
+  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 30); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* 2. Menu mobile (burger): buka/tutup + backdrop + tutup dengan Esc */
+  var nav = document.getElementById('nav');
+  var burger = document.getElementById('burger');
+  var backdrop = document.getElementById('navBackdrop');
+
+  function setMenu(open) {
+    nav.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+    backdrop.hidden = !open;
+    // pakai rAF agar transisi opacity tetap jalan saat elemen ditampilkan
+    requestAnimationFrame(function () { backdrop.classList.toggle('show', open); });
+    // cegah konten di belakang ikut ter-scroll saat menu terbuka
+    document.body.style.overflow = open && window.innerWidth <= 860 ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+  backdrop.addEventListener('click', function () { setMenu(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) setMenu(false);
+  });
+
+  /* 3. Smooth scroll ke setiap section (offset 72px untuk fixed header) */
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var id = link.getAttribute('href');
+      if (!id || id === '#') return;            // link placeholder dibiarkan
+      var target = document.querySelector(id);
+      if (!target) return;                       // mis. #berita belum ada sectionnya
+      e.preventDefault();
+      setMenu(false);
+      var top = target.getBoundingClientRect().top + window.pageYOffset - 71;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: Math.max(top, 0), behavior: reduce ? 'auto' : 'smooth' });
+      // tutup menu lebih dulu, lalu kembali ke posisi scroll yang benar setelah animasi
+      history.replaceState(null, '', id);
+    });
+  });
+
+  /* 4. Animasi fade-up saat scroll (IntersectionObserver, tanpa library) */
+  var items = Array.prototype.slice.call(document.querySelectorAll('.fade-up'));
+
+  // delay bertahap untuk kartu di dalam satu grid agar muncul berurutan
+  document.querySelectorAll('[data-stagger]').forEach(function (grid) {
+    grid.querySelectorAll(':scope > .fade-up').forEach(function (el, i) {
+      el.style.transitionDelay = (i * 70) + 'ms';
+    });
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    items.forEach(function (el) { io.observe(el); });
+
+    // elemen yang sudah terlihat saat halaman dibuka langsung tampil
+    window.addEventListener('load', function () {
+      items.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight) el.classList.add('in');
+      });
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
