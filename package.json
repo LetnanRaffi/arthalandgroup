@@ -9,7 +9,8 @@
     "lint": "eslint",
     "images": "node scripts/optimize-images.mjs",
     "preview": "npx --yes serve out -l 3000",
-    "deploy": "npm run build && npx --yes wrangler@4 deploy"
+    "deploy": "npm run build && npx --yes wrangler@4 deploy",
+    "postinstall": "node scripts/cloudflare-build.mjs"
   },
   "dependencies": {
     "next": "16.4.6",
