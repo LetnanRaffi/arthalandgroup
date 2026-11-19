@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "arthalandgroup",
+  "compatibility_date": "2026-11-18",
+  /**
+   * Website ini static export (`output: "export"` di next.config.ts),
+   * jadi tidak ada Worker/SSR. Semua file hasil build di `out/` diunggah
+   * sebagai static assets.
+   *
+   * WAJIB ada: tanpa file ini Wrangler mendeteksi Next.js lalu otomatis
+   * menjalankan adapter OpenNext (mode SSR) yang mencari `.next/standalone`
+   * — folder yang tidak pernah dibuat oleh static export.
+   */
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
